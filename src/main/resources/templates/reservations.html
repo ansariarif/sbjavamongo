@@ -1,0 +1,79 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reservations</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <h1> Reservations </h1>
+        </div>
+        
+        <form th:action="@{/search}"  method="get">
+           <select name="byparam">
+            <option value="id">Id</option>
+            <option value="firstName">FistName</option>
+            <option value="lastName">lastName</option>
+            <option value="mobile">mobile</option>
+            <option value="emailId">emailId</option>
+           </select>
+           <input th:value="${searchtext}" type="text"  name="searchtext" id="searchfield"/>
+           <button>search</button>
+        </form>
+    </div>
+    <a th:href="@{/edit-add-reservation}">
+        <button type="button" class="btn btn-success">Add Reservation</button>
+    </a>
+   
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table">
+                <thead>
+                <tr>
+                    <!--
+                     <th>Id</th>
+                    -->
+                    <th>fistName</th>
+                    <th>lastName</th>
+                    <th>mobile</th>
+                    <th>email</th>
+                    <th>state</th>
+                    <th>city</th>
+                    <th>date</th>
+                    <th>delete</th>
+                    <th>edit</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${reservations.empty}">
+                    <td colspan="2"> No Reservations Available</td>
+                </tr>
+                <tr th:each="reservation : ${reservations}">
+                    <!--
+                    <td><span th:text="${reservation.id}"> Id </span></td>
+                    -->
+                          <td><span th:text="${reservation.firstName}"> first Name </span></td>
+                    <td><span th:text="${reservation.lastName}"> last Name </span></td>
+                    <td><span th:text="${reservation.mobile}"> mobile </span></td>
+                    <td><span th:text="${reservation.emailId}"> email </span></td> 
+                    <td><span th:text="${reservation.state}"> state </span></td> 
+                    <td><span th:text="${reservation.city}">city </span></td>
+                     <td><span th:text="${reservation.createddate}">city </span></td>
+                    <td>
+                        <a th:href="@{/delete-reservation/{id}(id=${reservation.id})}">
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </a></td><td>
+                        <a th:href="@{/edit-add-reservation/{id}(id=${reservation.id})}">
+                            <button type="button" class="btn btn-primary">Edit</button>
+                        </a>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
